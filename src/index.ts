@@ -1,46 +1,41 @@
 import express from "express";
 import * as bodyParser from "body-parser";
-import {createConnection} from "typeorm";
-import {Request, Response} from "express";
+import { createConnection } from "typeorm";
+import { Request, Response } from "express";
 const port = 5000;
-import {AppRoutes} from "./routes";
 import path from "path";
 
 // //routes
-// import {get} from './controller/Get'
-// import {put} from './controller/Put'
-// import {post} from './controller/Post'
-// import {delet} from './controller/Delete'
+var user = require("./controller/user/user");
+var snippets = require("./controller/snippets/snippets");
+var login = require("./controller/user/login");
+var signup = require("./controller/user/signup");
+var forgot = require("./controller/user/forgot");
 
-var get = require('./controller/Get')
-var put = require('./controller/Put')
-var post = require('./controller/Post')
-var delet = require('./controller/Delete')
-
-// create connection with database
-// note that it's not active database connection
-// TypeORM creates connection pools and uses them for your requests
 const main = async () => {
-    const conn = await createConnection({
-      type: "postgres",
-      url: process.env.DATABASE_URL,
-      logging: true,
-      // synchronize: true,
-      migrations: [path.join(__dirname, "./migrations/*")],
+  //connection to postgres database
+  const conn = await createConnection({
+    type: "postgres",
+    url: process.env.DATABASE_URL,
+    logging: true,
+    // synchronize: true,
+    migrations: [path.join(__dirname, "./migrations/*")],
     //   entities: [Post, User, Updoot],
-    });
-    await conn.runMigrations();
-  
-    const app = express();
+  });
+  //comment this line after running the program once
+  await conn.runMigrations();
 
-    app.use('/v1/get', get);
-    app.use('/v1/put', put);
-    app.use('/v1/delete', delet);
-    app.use('/v1/post', post);
-  
-    app.listen("4000", () => {
-      console.log("server started on localhost:4000");
-    });
-  };
+  const app = express();
+
+  app.use("/api/snippets", snippets);
+  app.use("/api/user", user);
+  app.use("/api/login", login);
+  app.use("/api/signup", signup);
+  app.use("/api/forgot", forgot);
+
+  app.listen("4000", () => {
+    console.log("server started on localhost:4000");
+  });
+};
 
 main();
