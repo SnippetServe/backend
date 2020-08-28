@@ -2,10 +2,25 @@ import  express from "express"
 const app = express();
 const port = 8080;
 
-// Sample endpoint
+// GET
 app.get( "/", ( req:express.Request, res:express.Response ) => {
-    res.send("Snippet Serve")
+    res.json({"status":"get"})
 } );
+
+// POST
+app.post("/",(req:express.Request,res:express.Response) =>{
+    res.json({'status':'post'})
+})
+
+// PUT
+app.put("/",(req:express.Request, res:express.Response ) => {
+    res.json({"status":"put"})
+} );
+
+// DELETE
+app.delete("/",(req:express.Request,res:express.Response) =>{
+    res.json({"status":"delte"})
+})
 
 // start the Express server
 app.listen( port, () => {
