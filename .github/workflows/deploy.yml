@@ -29,4 +29,4 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_TOKEN}}
           heroku_app_name: "snippetserve"
-          heroku_email: "rohitkrishna094@gmail.com"
+          heroku_email: ${{HEROKU_EMAIL}}
