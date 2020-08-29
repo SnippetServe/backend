@@ -65,7 +65,6 @@ const main = async () => {
   );
 
   app.use(express.json());
-  app.use(express.urlencoded())
 
   app.use("/api/snippets", snippets);
   app.use("/api/user", user);
@@ -73,8 +72,12 @@ const main = async () => {
   app.use("/api/signup", signup);
   app.use("/api/forgot", forgot);
 
+  // Fix
+  // body-parser deprecated undefined extended: provide extended option dist/index.js:69:31
+  app.use(express.urlencoded({ extended: true }))
+
   app.listen(parseInt(process.env.PORT), () => {
-    console.log("serverS started on localhost:4000");
+    console.log(`Server started on localhost:${process.env.PORT}`);
   });
 };
 
