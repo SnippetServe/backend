@@ -2,6 +2,7 @@ import "reflect-metadata";
 import express from "express";
 import { createConnection } from "typeorm";
 import path from "path";
+import "dotenv-safe/config"
 
 //entities
 import { User } from "./entities/User";
