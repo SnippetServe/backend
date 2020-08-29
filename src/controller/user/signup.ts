@@ -20,21 +20,23 @@ router.post('/', async (req: express.Request, res: express.Response) => {
   const hashedPassword = await argon2.hash(password)
   let user;
   try {
-    const result = await getConnection()
-      .createQueryBuilder()
-      .insert()
-      .into(User)
-      .values({
-        username,
-        email,
-        password: hashedPassword,
-        uniqueid: unique,
-        description: desc
-      })
-      .returning("*")
-      .execute();
-    user = result.raw[0]
+    // const result = await getConnection()
+    //   .createQueryBuilder()
+    //   .insert()
+    //   .into(User)
+    //   .values({
+    //     username,
+    //     email,
+    //     password: hashedPassword,
+    //     uniqueid: unique,
+    //     description: desc
+    //   })
+    //   .returning("*")
+    //   .execute();
+    const result = await User.create({username, email, password: hashedPassword, uniqueid: unique, description: desc}).save()
+    user = result
   } catch (err) {
+    console.log(err)
     if (err.code === "23505") {
       res.send("Username taken")
     }
