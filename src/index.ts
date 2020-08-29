@@ -2,9 +2,11 @@ import "reflect-metadata";
 import express from "express";
 import { createConnection } from "typeorm";
 import path from "path";
+import "dotenv-safe/config"
 
 //entities
 import { User } from "./entities/User";
+import { Snippet } from "./entities/Snippet";
 
 //redis and session
 import connectRedis from 'connect-redis'
@@ -13,7 +15,6 @@ import Redis from "ioredis";
 
 //constants
 import { __prod__, COOKIE_NAME } from "./constants";
-import { Snippet } from "./entities/Snippet";
 
 
 //routes
@@ -58,7 +59,7 @@ const main = async () => {
         domain: __prod__ ? ".snippetserve.com" : undefined,
       },
       saveUninitialized: false,
-      secret: "sdlkfjlskdjfkls7890787",
+      secret: process.env.SESSION_SECRET,
       resave: false,
     })
   );
@@ -72,7 +73,7 @@ const main = async () => {
   app.use("/api/signup", signup);
   app.use("/api/forgot", forgot);
 
-  app.listen("4000", () => {
+  app.listen(parseInt(process.env.PORT), () => {
     console.log("serverS started on localhost:4000");
   });
 };
