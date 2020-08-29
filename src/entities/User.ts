@@ -6,11 +6,11 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number
 
-  @Column({unique: true})
-  username!: string;
+  @PrimaryGeneratedColumn("uuid")
+  uniqueid!: string
 
   @Column({unique: true})
-  uniqueid!: string;
+  username!: string;
 
   @Column()
   @CreateDateColumn()
