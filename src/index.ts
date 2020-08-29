@@ -13,7 +13,7 @@ const signup = require("./controller/user/signup");
 const forgot = require("./controller/user/forgot");
 
 const main = async () => {
-  //connection to postgres database
+  // connection to postgres database
   const conn = await createConnection({
     type: "postgres",
     url: process.env.DATABASE_URL,
@@ -22,7 +22,7 @@ const main = async () => {
     migrations: [path.join(__dirname, "./migrations/*")],
     //   entities: [Post, User, Updoot],
   });
-  //comment this line after running the program once
+  // comment this line after running the program once
   await conn.runMigrations();
 
   const app = express();
