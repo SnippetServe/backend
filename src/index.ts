@@ -1,8 +1,5 @@
 import express from "express";
-import * as bodyParser from "body-parser";
 import { createConnection } from "typeorm";
-import { Request, Response } from "express";
-const port = 5000;
 import path from "path";
 
 // //routes
@@ -34,7 +31,7 @@ const main = async () => {
   app.use("/api/forgot", forgot);
 
   app.listen("4000", () => {
-    console.log("server started on localhost:4000");
+    console.log("serverS started on localhost:4000");
   });
 };
 
