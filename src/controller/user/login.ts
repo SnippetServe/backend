@@ -26,6 +26,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
 
   // TODO delete once front end is able to make request (dont want the front end to access the user obv)
   res.send(user)
+
 })
 
 module.exports = router;
