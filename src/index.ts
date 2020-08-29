@@ -6,11 +6,11 @@ const port = 5000;
 import path from "path";
 
 // //routes
-var user = require("./controller/user/user");
-var snippets = require("./controller/snippets/snippets");
-var login = require("./controller/user/login");
-var signup = require("./controller/user/signup");
-var forgot = require("./controller/user/forgot");
+const user = require("./controller/user/user");
+const snippets = require("./controller/snippets/snippets");
+const login = require("./controller/user/login");
+const signup = require("./controller/user/signup");
+const forgot = require("./controller/user/forgot");
 
 const main = async () => {
   //connection to postgres database
