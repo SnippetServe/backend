@@ -1,4 +1,3 @@
-
 import * as express from 'express';
 import { User } from '../../entities/User';
 var router = express.Router();

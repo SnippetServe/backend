@@ -1,5 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity, OneToMany } from 'typeorm'
 import {Snippet} from './Snippet'
+import { Comment } from './Comment';
 
 @Entity()
 export class User extends BaseEntity {
@@ -25,10 +26,12 @@ export class User extends BaseEntity {
   @Column()
   description: string;
 
-
   @Column()
   password: string
 
   @OneToMany(() => Snippet, snippet => snippet.creator)
   snippets: Snippet[]
+
+  @OneToMany(() => Comment, comment => comment.creator)
+  comments: Comment[]
 }
