@@ -11,7 +11,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
   const username = body.username 
   const password = body.password
 
-  const user = await User.findOne({username: username})
+  const user = await Users.findOne({username: username})
   if (!user) {
     res.send("User not found")
   } 
