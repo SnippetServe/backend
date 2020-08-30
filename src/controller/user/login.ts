@@ -1,7 +1,7 @@
 
 import * as express from 'express';
 import { getConnection, getRepository } from 'typeorm';
-import { User } from '../../entities/User';
+import { Users } from '../../entities/User';
 import argon2 from 'argon2';
 const router = express.Router();
 

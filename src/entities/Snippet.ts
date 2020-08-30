@@ -1,5 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity, ManyToOne, OneToMany } from 'typeorm'
-import {User} from './User'
+import {Users} from './User'
 import {Comment} from './Comment'
 
 @Entity()
@@ -38,8 +38,8 @@ export class Snippet extends BaseEntity {
   @Column()
   code!: string;
 
-  @ManyToOne(() => User, user => user.snippets)
-  creator: User;
+  @ManyToOne(() => Users, user => user.snippets)
+  creator: Users;
 
   @OneToMany(() => Comment, comment => comment.snippet)
   comments: Comment[]

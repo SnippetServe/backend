@@ -3,7 +3,7 @@ import {Snippet} from './Snippet'
 import { Comment } from './Comment';
 
 @Entity()
-export class User extends BaseEntity {
+export class Users extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number
 
