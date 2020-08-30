@@ -4,31 +4,29 @@ import { createConnection } from "typeorm";
 import path from "path";
 import "dotenv-safe/config"
 
-//entities
+// Entities
 import { User } from "./entities/User";
 import { Snippet } from "./entities/Snippet";
 
-//redis and session
+// Redis and Session
 import connectRedis from 'connect-redis'
 import session from 'express-session'
 import Redis from "ioredis";
 
-//constants
+// Constants
 import { __prod__, COOKIE_NAME } from "./constants";
 import { Comment } from "./entities/Comment";
 
-
-//routes
+// Routes
 const user = require("./controller/user/user");
 const snippets = require("./controller/snippets/snippets");
 const login = require("./controller/user/login");
 const signup = require("./controller/user/signup");
 const forgot = require("./controller/user/forgot");
 
-
 const main = async () => {
-  // connection to postgres database
-  const conn = await createConnection({
+  // Connect to postgres database
+  await createConnection({
     type: "postgres",
     url: process.env.DATABASE_URL,
     logging: true,
@@ -36,12 +34,10 @@ const main = async () => {
     migrations: [path.join(__dirname, "./migrations/*")],
     entities: [User, Snippet, Comment],
   });
-  //comment this line after running the program once
-  //   await conn.runMigrations();
 
   const app = express();
 
-  //redis
+  // Redis setup
   const RedisStore = connectRedis(session);
   const redis = new Redis(process.env.REDIS_URL);
 
@@ -66,7 +62,6 @@ const main = async () => {
   );
 
   app.use(express.json());
-  app.use(express.urlencoded())
 
   app.use("/api/snippets", snippets);
   app.use("/api/user", user);
@@ -74,8 +69,16 @@ const main = async () => {
   app.use("/api/signup", signup);
   app.use("/api/forgot", forgot);
 
-  app.listen(parseInt(process.env.PORT), () => {
-    console.log("Server started on localhost:4000");
+
+  /*
+  Fix for:
+  body-parser deprecated undefined extended: provide extended option dist/index.js:69:31
+  */
+  app.use(express.urlencoded({ extended: true }))
+
+  app.listen(parseInt(process.env.PORT,10), () => {
+    // tslint:disable-next-line:no-console
+    console.log(`Server started on localhost:${process.env.PORT}`);
   });
 };
 
