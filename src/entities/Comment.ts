@@ -1,9 +1,9 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity, ManyToOne, OneToMany } from 'typeorm'
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity, ManyToOne, OneToMany, ManyToMany } from 'typeorm'
 import {User} from './User'
-import {Comment} from './Comment'
+import { Snippet } from './Snippet';
 
 @Entity()
-export class Snippet extends BaseEntity {
+export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number
 
@@ -18,13 +18,10 @@ export class Snippet extends BaseEntity {
   updatedAt: Date;
 
   @Column()
-  description: string;
+  text: string;
 
   @Column()
   private: boolean;
-
-  @Column() 
-  tags: string;
 
   @Column()
   downvotes: number;
@@ -32,17 +29,12 @@ export class Snippet extends BaseEntity {
   @Column() 
   upvotes: number;
 
-  @Column()
-  lang: string;
-
-  @Column()
-  code!: string;
 
   @ManyToOne(() => User, user => user.snippets)
   creator: User;
 
-  @OneToMany(() => Comment, comment => comment.snippet)
-  comments: Comment[]
+  @ManyToOne(() => Snippet, snippet => snippet.comments)
+  snippet: Snippet
 
   @Column()
   creatorId: string;

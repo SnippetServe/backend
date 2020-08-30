@@ -15,6 +15,7 @@ import Redis from "ioredis";
 
 //constants
 import { __prod__, COOKIE_NAME } from "./constants";
+import { Comment } from "./entities/Comment";
 
 
 //routes
@@ -33,7 +34,7 @@ const main = async () => {
     logging: true,
     synchronize: true,
     migrations: [path.join(__dirname, "./migrations/*")],
-    entities: [User, Snippet],
+    entities: [User, Snippet, Comment],
   });
   //comment this line after running the program once
   //   await conn.runMigrations();
