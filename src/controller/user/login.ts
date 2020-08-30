@@ -22,7 +22,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
   
 
   // TODO uncomment once front end is able to make request (this is will create a session for the user)
-  // req.session.userId = user.id
+  // req.session.userId = user.uniqueid
 
   // TODO delete once front end is able to make request (dont want the front end to access the user obv)
   res.send(user)
