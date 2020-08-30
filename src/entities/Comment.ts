@@ -30,7 +30,7 @@ export class Comment extends BaseEntity {
   upvotes: number;
 
 
-  @ManyToOne(() => User, user => user.snippets)
+  @ManyToOne(() => User, user => user.comments)
   creator: User;
 
   @ManyToOne(() => Snippet, snippet => snippet.comments)
