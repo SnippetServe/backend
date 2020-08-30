@@ -1,7 +1,7 @@
 
 import * as express from 'express';
 import { getConnection, getRepository } from 'typeorm';
-import { User } from '../../entities/User';
+import { Users } from '../../entities/User';
 import argon2 from 'argon2';
 const router = express.Router();
 
@@ -11,7 +11,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
   const username = body.username 
   const password = body.password
 
-  const user = await User.findOne({username: username})
+  const user = await Users.findOne({username: username})
   if (!user) {
     res.send("User not found")
   } 

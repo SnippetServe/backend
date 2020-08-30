@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { User } from '../../entities/User';
+import { Users } from '../../entities/User';
 var router = express.Router();
 
 
@@ -8,7 +8,7 @@ router.get('/', async (req: express.Request, res: express.Response) => {
   //temporary code to retrieve current user since user session cant be stored in postman
   const body = req.body 
   const uuid = body.uuid
-  const user = await User.findOne({uniqueid: uuid})
+  const user = await Users.findOne({uniqueid: uuid})
   if(!user) {
     res.send("User not found")
   }
@@ -23,7 +23,7 @@ router.get('/', async (req: express.Request, res: express.Response) => {
 router.get('/id', async (req: express.Request, res: express.Response) => {
   const body = req.body 
   const uuid = body.uuid 
-  const user = await User.findOne({uniqueid: uuid}) 
+  const user = await Users.findOne({uniqueid: uuid}) 
   if (!user) {
     res.send("user not found")
   }

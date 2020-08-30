@@ -5,7 +5,7 @@ import path from "path";
 import "dotenv-safe/config"
 
 // Entities
-import { User } from "./entities/User";
+import { Users } from "./entities/User";
 import { Snippet } from "./entities/Snippet";
 
 // Redis and Session
@@ -16,7 +16,6 @@ import Redis from "ioredis";
 // Constants
 import { __prod__, COOKIE_NAME } from "./constants";
 import { Comment } from "./entities/Comment";
-
 // Routes
 const user = require("./controller/user/user");
 const snippets = require("./controller/snippets/snippets");
@@ -32,7 +31,7 @@ const main = async () => {
     logging: true,
     synchronize: true,
     migrations: [path.join(__dirname, "./migrations/*")],
-    entities: [User, Snippet, Comment],
+    entities: [Users, Snippet, Comment],
   });
 
   const app = express();
