@@ -23,6 +23,21 @@ router.post('/', async (req: express.Request, res: express.Response) => {
     const result = await User.create({username, email, password: hashedPassword, description: desc}).save()
     user = result
 
+    // const result = await getConnection()
+    //   .createQueryBuilder()
+    //   .insert()
+    //   .into(User)
+    //   .values({
+    //     username,
+    //     email,
+    //     password: hashedPassword,
+    //     uniqueid: unique,
+    //     description: desc
+    //   })
+    //   .returning("*")
+    //   .execute();
+    const result = await User.create({username, email, password: hashedPassword, uniqueid: unique, description: desc}).save()
+    user = result
   } catch (err) {
     console.log(err)
     if (err.code === "23505") {
