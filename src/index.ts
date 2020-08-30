@@ -15,6 +15,7 @@ import Redis from "ioredis";
 
 // Constants
 import { __prod__, COOKIE_NAME } from "./constants";
+import { Comment } from "./entities/Comment";
 
 // Routes
 const user = require("./controller/user/user");
@@ -31,7 +32,7 @@ const main = async () => {
     logging: true,
     synchronize: true,
     migrations: [path.join(__dirname, "./migrations/*")],
-    entities: [User, Snippet],
+    entities: [User, Snippet, Comment],
   });
 
   const app = express();
@@ -67,6 +68,7 @@ const main = async () => {
   app.use("/api/login", login);
   app.use("/api/signup", signup);
   app.use("/api/forgot", forgot);
+
 
   /*
   Fix for:
