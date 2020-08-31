@@ -4,18 +4,22 @@ import { createConnection } from 'typeorm';
 import path from 'path';
 import 'dotenv-safe/config';
 
-// Entities
+// morgan
+import morgan from 'morgan';
 
 // Redis and Session
 import connectRedis from 'connect-redis';
 import session from 'express-session';
 import Redis from 'ioredis';
+
+// Entities
 import Snippet from './entities/Snippet';
 import User from './entities/User';
 
 // Constants
 import { __prod__, COOKIE_NAME } from './constants';
 import Comment from './entities/Comment';
+
 // Routes
 const user = require('./controller/user/user');
 const snippets = require('./controller/snippets/snippets');
@@ -73,6 +77,9 @@ const main = async () => {
   body-parser deprecated undefined extended: provide extended option dist/index.js:69:31
   */
   app.use(express.urlencoded({ extended: true }));
+
+  // Use morgan
+  app.use(morgan('dev'));
 
   app.listen(parseInt(process.env.PORT, 10), () => {
     // tslint:disable-next-line:no-console
