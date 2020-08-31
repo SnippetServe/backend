@@ -81,8 +81,12 @@ const main = async () => {
   // Use morgan
   app.use(morgan('dev'));
 
+  // For 404 pages
+  app.use((req, res) => {
+    res.status(404).json({ status: '404' });
+  });
+
   app.listen(parseInt(process.env.PORT, 10), () => {
-    // tslint:disable-next-line:no-console
     console.log(`Server started on localhost:${process.env.PORT}`);
   });
 };
