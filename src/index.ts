@@ -27,6 +27,8 @@ const login = require('./controller/user/login');
 const signup = require('./controller/user/signup');
 const forgot = require('./controller/user/forgot');
 
+const comment = require('./controller/comments/comment');
+
 const main = async () => {
   // Connect to postgres database
   await createConnection({
@@ -71,6 +73,8 @@ const main = async () => {
   app.use('/api/login', login);
   app.use('/api/signup', signup);
   app.use('/api/forgot', forgot);
+
+  app.use('/api/comment/', comment);
 
   /*
   Fix for:
