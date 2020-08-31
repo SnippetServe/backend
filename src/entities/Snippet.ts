@@ -7,8 +7,8 @@ export class Snippet extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number
 
-  @Column({unique: true})
-  uniqueid!: string;
+  @PrimaryGeneratedColumn("uuid")
+  uniqueid!: string
 
   @Column()
   @CreateDateColumn()
@@ -45,5 +45,5 @@ export class Snippet extends BaseEntity {
   comments: Comment[]
 
   @Column()
-  creatorId: string;
+  creatorId!: number;
 }

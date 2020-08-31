@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { User } from '../../entities/User';
+import { Snippet } from '../../entities/Snippet';
 var router = express.Router();
 
 
@@ -24,15 +25,14 @@ router.get('/id', async (req: express.Request, res: express.Response) => {
   const body = req.body 
   const uuid = body.uuid 
   const user = await User.findOne({uniqueid: uuid}) 
+  const snippets = await Snippet.find({creator: uuid, private: false})
   if (!user) {
     res.send("user not found")
   }
   res.send({
     username: user.username,
-    snippets: user.snippets
+    snippets: snippets
   })
-
-  //TODO uncomment once front end is able to make request
 })
 
 module.exports = router;

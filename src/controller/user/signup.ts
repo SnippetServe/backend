@@ -20,7 +20,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
   const hashedPassword = await argon2.hash(password)
   let user;
   try {
-    const result = await User.create({username, email, password: hashedPassword, uniqueid: unique, description: desc}).save()
+    const result = await User.create({username, email, password: hashedPassword, description: desc}).save()
     user = result
   } catch (err) {
     console.log(err)
