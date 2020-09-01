@@ -1,0 +1,22 @@
+{
+
+    "manifest_version": 2,
+    "name": "Snippet Collecter",
+    "version": "1.0",
+    "description": "Searches the entered text on the code-snippet collection platform",
+  
+    "icons":{
+        "48": "icons/border-48.png"
+    },
+    "permissions":[
+        "contextMenus",
+        "tabs"
+    ],
+    "background":{
+        "scripts":["background.js"]
+    },
+    "page_action":{
+        "default_icon": "icons/border-48.png",
+        "browser_style": true
+    }
+  }
