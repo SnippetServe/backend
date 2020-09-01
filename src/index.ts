@@ -11,7 +11,6 @@ import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 // Constants
 import { COOKIE_NAME, __prod__ } from './constants';
-
 // Entities
 import Snippet from './entities/Snippet';
 import User from './entities/User';
