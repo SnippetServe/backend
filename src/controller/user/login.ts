@@ -10,9 +10,12 @@ router.post('/', async (req: express.Request, res: express.Response) => {
   const { username } = body;
   const { password } = body;
 
-  const user = await User.findOne({ username });
+  const user = await User.findOne({
+    where: { username },
+    select: ['password', 'username', 'email', 'description']
+  });
   if (!user) {
-    res.send('User not found');
+    res.send('Incorrect Username/Password');
   }
   const verifyPass = await argon2.verify(user.password, password);
   if (!verifyPass) {
@@ -24,6 +27,8 @@ router.post('/', async (req: express.Request, res: express.Response) => {
 
   // TODO delete once front end is able to make request (dont want the front end to access the user obv)
   res.send(user);
+  // tslint next-line:no-console
+  console.log(user);
 });
 
 module.exports = router;

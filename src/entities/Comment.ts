@@ -4,13 +4,8 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  BaseEntity,
-  ManyToOne
+  BaseEntity
 } from 'typeorm';
-// TODO find better way to either disable this rule or fix it
-/* eslint-disable import/no-cycle */
-import User from './User';
-import Snippet from './Snippet';
 
 @Entity()
 class Comment extends BaseEntity {
@@ -39,11 +34,11 @@ class Comment extends BaseEntity {
   @Column()
   upvotes: number;
 
-  @ManyToOne(() => User, (user) => user.comments)
-  creator: User;
+  // @ManyToOne(() => User, (user) => user.comments)
+  // creator: User;
 
-  @ManyToOne(() => Snippet, (snippet) => snippet.comments)
-  snippet: Snippet;
+  // @ManyToOne(() => Snippet, (snippet) => snippet.comments)
+  // snippet: Snippet;
 
   @Column()
   creatorId: string;
