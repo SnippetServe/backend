@@ -13,8 +13,8 @@ import session from 'express-session';
 import Redis from 'ioredis';
 
 //Entities
-import {Snippet} from './entities/Snippet';
-import {User} from './entities/User';
+import Snippet from './entities/Snippet';
+import User from './entities/User';
 
 // Constants
 import { __prod__, COOKIE_NAME } from './constants';

@@ -7,20 +7,18 @@ import {
   BaseEntity,
   ManyToOne,
   OneToMany,
-  JoinColumn
+  JoinColumn,
+  PrimaryColumn
 } from 'typeorm';
 // TODO find better way to either disable this rule or fix it
 /* eslint-disable import/no-cycle */
-import {User} from './User';
+import User from './User';
 import Comment from './Comment';
 
 @Entity()
-export class Snippet extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
+export default class Snippet extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
-  uniqueid!: string
+  uuid: string
 
   @Column()
   @CreateDateColumn()
@@ -50,11 +48,13 @@ export class Snippet extends BaseEntity {
   @Column()
   code!: string;
 
-  @ManyToOne(() => User, user => user.snippets, {primary: true})
-  creator: User
+  @ManyToOne(() => User, (user: User) => user.snippets, {primary: true})
+  @JoinColumn({name: "userUUID"})
+  user: User
+
+  @Column()
+  userUUID: string
 
   // @OneToMany(() => Comment, (comment: Comment) => comment.snippet)
   // comments: Comment[];
-  // @Column()
-  // creatorId!: number;
 }
