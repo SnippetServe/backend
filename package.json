@@ -8,7 +8,9 @@
     "dev": "nodemon dist/index.js",
     "start": "node dist/index.js",
     "build": "tsc",
-    "devRun": "concurrently --kill-others \"tsc -w\" \"nodemon dist/index.js\""
+    "devRun": "concurrently --kill-others \"tsc -w\" \"nodemon dist/index.js\"",
+    "lint": "eslint . --ext .ts",
+    "lintFix": "eslint . --ext .ts --fix"
   },
   "keywords": [],
   "author": "",
@@ -19,8 +21,16 @@
     "@types/express": "^4.17.7",
     "@types/express-session": "^1.17.0",
     "@types/node": "^14.6.1",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
     "concurrently": "^5.3.0",
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "nodemon": "^2.0.4",
+    "prettier": "^2.1.1",
     "ts-node": "^9.0.0",
     "tslint": "^6.1.3",
     "typescript": "^4.0.2"
@@ -33,6 +43,7 @@
     "express-session": "^1.17.1",
     "ioredis": "^4.17.3",
     "pg": "^8.3.3",
+    "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.25"
   }
 }

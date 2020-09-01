@@ -1,11 +1,23 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity, ManyToOne, OneToMany } from 'typeorm'
-import {User} from './User'
-import {Comment} from './Comment'
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  BaseEntity,
+  ManyToOne,
+  OneToMany,
+  JoinColumn
+} from 'typeorm';
+// TODO find better way to either disable this rule or fix it
+/* eslint-disable import/no-cycle */
+import {User} from './User';
+import Comment from './Comment';
 
 @Entity()
 export class Snippet extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id!: number
+  id!: number;
 
   @PrimaryGeneratedColumn("uuid")
   uniqueid!: string
@@ -23,13 +35,13 @@ export class Snippet extends BaseEntity {
   @Column()
   private: boolean;
 
-  @Column() 
+  @Column()
   tags: string;
 
   @Column()
   downvotes: number;
 
-  @Column() 
+  @Column()
   upvotes: number;
 
   @Column()
@@ -38,12 +50,11 @@ export class Snippet extends BaseEntity {
   @Column()
   code!: string;
 
-  @ManyToOne(() => User, user => user.snippets)
-  creator: User;
+  @ManyToOne(() => User, user => user.snippets, {primary: true})
+  creator: User
 
-  @OneToMany(() => Comment, comment => comment.snippet)
-  comments: Comment[]
-
-  @Column()
-  creatorId!: number;
+  // @OneToMany(() => Comment, (comment: Comment) => comment.snippet)
+  // comments: Comment[];
+  // @Column()
+  // creatorId!: number;
 }
