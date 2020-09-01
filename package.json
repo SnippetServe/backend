@@ -12,9 +12,20 @@
     "lint": "eslint . --ext .ts",
     "lintFix": "eslint . --ext .ts --fix"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,json}": [
+      "prettier --config .prettierrc --write",
+      "eslint . --ext .ts --fix"
+    ]
+  },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/babel__core": "^7.1.9",
     "@types/connect-redis": "^0.0.14",
@@ -29,6 +40,8 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.13",
     "nodemon": "^2.0.4",
     "prettier": "^2.1.1",
     "ts-node": "^9.0.0",

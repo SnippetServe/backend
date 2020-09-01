@@ -28,13 +28,15 @@ router.post('/create', async (req: express.Request, res: express.Response) => {
     upvotes
   }).save();
 
-  //console.log all snippets from the user
+  // console.log all snippets from the user
   const snippetRepo = await getConnection().getRepository(Snippet);
   const users = await snippetRepo.find({
     where: { userUUID },
     relations: ['user']
   });
   users.forEach((user) => {
+
+    // tslint:disable-next-line:no-console
     console.log(user);
   });
   // const user1 = await User.findOne({id: creatorId})

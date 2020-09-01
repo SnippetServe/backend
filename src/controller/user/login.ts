@@ -10,7 +10,10 @@ router.post('/', async (req: express.Request, res: express.Response) => {
   const { username } = body;
   const { password } = body;
 
-  const user = await User.findOne({ where: { username }, select: ['password', 'username', 'email', 'description'] });
+  const user = await User.findOne({
+    where: { username },
+    select: ['password', 'username', 'email', 'description']
+  });
   if (!user) {
     res.send('Incorrect Username/Password');
   }
@@ -24,7 +27,8 @@ router.post('/', async (req: express.Request, res: express.Response) => {
 
   // TODO delete once front end is able to make request (dont want the front end to access the user obv)
   res.send(user);
-  console.log(user)
+  // tslint next-line:no-console
+  console.log(user);
 });
 
 module.exports = router;
