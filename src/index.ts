@@ -1,23 +1,20 @@
-import 'reflect-metadata';
-import express from 'express';
-import { createConnection } from 'typeorm';
-import path from 'path';
-import 'dotenv-safe/config';
-
-// morgan
-import morgan from 'morgan';
-
 // Redis and Session
 import connectRedis from 'connect-redis';
+import 'dotenv-safe/config';
+import express from 'express';
 import session from 'express-session';
 import Redis from 'ioredis';
+// morgan
+import morgan from 'morgan';
+import path from 'path';
+import 'reflect-metadata';
+import { createConnection } from 'typeorm';
+// Constants
+import { COOKIE_NAME, __prod__ } from './constants';
 
 // Entities
 import Snippet from './entities/Snippet';
 import User from './entities/User';
-
-// Constants
-import { __prod__, COOKIE_NAME } from './constants';
 
 // Routes
 const user = require('./controller/user/user');
