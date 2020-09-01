@@ -4,13 +4,8 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  BaseEntity,
-  ManyToOne
+  BaseEntity
 } from 'typeorm';
-// TODO find better way to either disable this rule or fix it
-/* eslint-disable import/no-cycle */
-import User from './User';
-import Snippet from './Snippet';
 
 @Entity()
 class Comment extends BaseEntity {
