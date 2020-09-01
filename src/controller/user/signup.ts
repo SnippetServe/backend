@@ -29,6 +29,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
     }).save();
     user = result;
   } catch (err) {
+    // tslint:disable-next-line:no-console
     console.log(err);
     if (err.code === '23505') {
       res.send('Username taken');

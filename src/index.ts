@@ -11,7 +11,6 @@ import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 // Constants
 import { COOKIE_NAME, __prod__ } from './constants';
-import Comment from './entities/Comment';
 // Entities
 import Snippet from './entities/Snippet';
 import User from './entities/User';
@@ -31,7 +30,7 @@ const main = async () => {
     logging: true,
     synchronize: true,
     migrations: [path.join(__dirname, './migrations/*')],
-    entities: [User, Snippet, Comment]
+    entities: [User, Snippet]
   });
 
   const app = express();
@@ -83,6 +82,7 @@ const main = async () => {
   });
 
   app.listen(parseInt(process.env.PORT, 10), () => {
+    // tslint:disable-next-line:no-console
     console.log(`Server started on localhost:${process.env.PORT}`);
   });
 };

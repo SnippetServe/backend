@@ -51,6 +51,7 @@
   "dependencies": {
     "@types/morgan": "^1.9.1",
     "argon2": "^0.27.0",
+    "class-transformer": "^0.3.1",
     "connect-redis": "^5.0.0",
     "dotenv-safe": "^8.2.0",
     "express": "^4.17.1",
