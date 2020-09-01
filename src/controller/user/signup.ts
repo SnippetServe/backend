@@ -29,6 +29,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
     }).save();
     user = result;
   } catch (err) {
+    // tslint:disable-next-line:no-console
     console.log(err);
     if (err.code === '23505') {
       res.send('Username taken');
@@ -36,11 +37,10 @@ router.post('/', async (req: express.Request, res: express.Response) => {
   }
 
   // TODO uncomment once front end is able to make request (this is will create a session for the user)
-  //req.session.userId = user.uniqueid
+  // req.session.userId = user.uniqueid
 
   // TODO delete once front end is able to make request (dont want the front end to access the user obv)
   res.send(user);
-  
 });
 
 module.exports = router;

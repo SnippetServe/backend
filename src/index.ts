@@ -12,13 +12,12 @@ import connectRedis from 'connect-redis';
 import session from 'express-session';
 import Redis from 'ioredis';
 
-//Entities
+// Entities
 import Snippet from './entities/Snippet';
 import User from './entities/User';
 
 // Constants
 import { __prod__, COOKIE_NAME } from './constants';
-import Comment from './entities/Comment';
 
 // Routes
 const user = require('./controller/user/user');
@@ -72,7 +71,6 @@ const main = async () => {
   app.use('/api/signup', signup);
   app.use('/api/forgot', forgot);
 
-
   /*
   Fix for:
   body-parser deprecated undefined extended: provide extended option dist/index.js:69:31
@@ -88,6 +86,7 @@ const main = async () => {
   });
 
   app.listen(parseInt(process.env.PORT, 10), () => {
+    // tslint:disable-next-line:no-console
     console.log(`Server started on localhost:${process.env.PORT}`);
   });
 };
