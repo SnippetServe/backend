@@ -17,6 +17,8 @@ router.post('/create', async (req: express.Request, res: express.Response) => {
   const upvotes = 0;
   /*&hi */
   //TODO check if user is logged in
+
+
   const snippet = await Snippet.create({
     userUUID,
     description,
@@ -29,12 +31,14 @@ router.post('/create', async (req: express.Request, res: express.Response) => {
   }).save();
 
   //console.log all snippets from the user
+
   const snippetRepo = await getConnection().getRepository(Snippet);
   const users = await snippetRepo.find({
     where: { userUUID },
     relations: ['user']
   });
   users.forEach((user) => {
+
     console.log(user);
   });
   // const user1 = await User.findOne({id: creatorId})

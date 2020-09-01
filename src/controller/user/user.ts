@@ -1,21 +1,21 @@
 import * as express from 'express';
+import argon2 from 'argon2';
 import User from '../../entities/User';
 import Snippet from '../../entities/Snippet';
-var router = express.Router();
 
-import argon2 from 'argon2'
+const router = express.Router();
 
 // get route
 router.get('/', async (req: express.Request, res: express.Response) => {
   // temporary code to retrieve current user since user session cant be stored in postman
   const { body } = req;
   const { id } = body;
-  //TOO uncomment once front end is able to make request
+  // TOO uncomment once front end is able to make request
   // if(!req.session.userId) {
   //   res.send("User not logged in")
   // }
   // const user = await User.findOne(req.session.userId);
-  const user = await User.findOne(id)
+  const user = await User.findOne(id);
   if (!user) {
     res.send('User not found');
   }
@@ -28,10 +28,11 @@ router.get('/', async (req: express.Request, res: express.Response) => {
 });
 
 router.get('/id', async (req: express.Request, res: express.Response) => {
-  const body = req.body 
-  const id = body.uuid 
-  const user = await User.findOne(id) 
-  const snippets = await Snippet.find({user: id, private: false})
+  const { body } = req;
+  const id = body.uuid;
+  const user = await User.findOne(id);
+  // eslint-disable-next-line no-unused-vars
+  const snippets = await Snippet.find({ user: id, private: false });
 
   if (!user) {
     res.send('user not found');
