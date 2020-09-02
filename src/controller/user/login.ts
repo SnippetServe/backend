@@ -15,20 +15,18 @@ router.post('/', async (req: express.Request, res: express.Response) => {
     select: ['password', 'username', 'email', 'description']
   });
   if (!user) {
-    res.send('Incorrect Username/Password');
+    res.json({ error: 'Incorrect Username/Password' });
   }
   const verifyPass = await argon2.verify(user.password, password);
   if (!verifyPass) {
-    res.send('Incorrect Username/Password');
+    res.json({ error: 'Incorrect Username/Password' });
   }
 
   // TODO uncomment once front end is able to make request (this is will create a session for the user)
   // req.session.userId = user.uniqueid
 
   // TODO delete once front end is able to make request (dont want the front end to access the user obv)
-  res.send(user);
-  // tslint next-line:no-console
-  console.log(user);
+  res.json({ user });
 });
 
 module.exports = router;

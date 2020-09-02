@@ -17,9 +17,9 @@ router.get('/', async (req: express.Request, res: express.Response) => {
   // const user = await User.findOne(req.session.userId);
   const user = await User.findOne(id);
   if (!user) {
-    res.send('User not found');
+    res.json({ error: 'User not found' });
   }
-  res.send(user);
+  res.json({ user });
 
   // TODO uncomment once front end is able to make request
   // if(req.session.userId == user.uniqueid) {
@@ -35,9 +35,9 @@ router.get('/id', async (req: express.Request, res: express.Response) => {
   const snippets = await Snippet.find({ user: id, private: false });
 
   if (!user) {
-    res.send('user not found');
+    res.json({ error: 'user not found' });
   }
-  res.send({
+  res.json({
     username: user.username,
     snippets: user.snippets
   });
@@ -55,7 +55,7 @@ router.put('/', async (req: express.Request, res: express.Response) => {
   const user = await User.findOne(id);
 
   if (!user) {
-    res.send('user not found');
+    res.json({ error: 'user not found' });
   }
 
   const { username } = body;
@@ -64,7 +64,7 @@ router.put('/', async (req: express.Request, res: express.Response) => {
   const { email } = body;
 
   if (password.length <= 2) {
-    res.send('Password too short');
+    res.json({ error: 'Password too short' });
   }
 
   const hashedPassword = await argon2.hash(password);
@@ -76,7 +76,7 @@ router.put('/', async (req: express.Request, res: express.Response) => {
   user.email = email;
   user.save();
 
-  res.send('updated');
+  res.json({ msg: 'updated' });
 
   // TODO uncomment once front end is able to make request
   // if(req.session.userId == user.uniqueid) {
