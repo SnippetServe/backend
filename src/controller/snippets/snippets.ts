@@ -43,7 +43,7 @@ router.post('/create', async (req: express.Request, res: express.Response) => {
   // user.save()
   // const result = await User.findOne({id: 1})
   // await Snippet.delete({})
-  res.send(snippet);
+  res.json({ snippet });
 });
 
 router.post('/update', async (req: express.Request, res: express.Response) => {
@@ -58,7 +58,7 @@ router.post('/update', async (req: express.Request, res: express.Response) => {
   // TODO check if user is logged in
   const snippet = await Snippet.findOne(uuid);
   if (!snippet) {
-    res.send('Snipet not found');
+    res.json({ error: 'Snipet not found' });
   } else {
     snippet.description = description;
     snippet.private = isPrivate;
@@ -67,7 +67,7 @@ router.post('/update', async (req: express.Request, res: express.Response) => {
     snippet.code = code;
     snippet.save();
 
-    res.send(snippet);
+    res.json({ snippet });
   }
 });
 
@@ -77,10 +77,10 @@ router.post('/delete', async (req: express.Request, res: express.Response) => {
 
   const snippet = await Snippet.findOne(uuid);
   if (!snippet) {
-    res.send('Snippet not found');
+    res.json({ error: 'Snippet not found' });
   } else {
     await Snippet.delete(uuid);
-    res.send('snippet deleted');
+    res.json({ msg: 'snippet deleted' });
   }
 });
 

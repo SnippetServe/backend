@@ -12,13 +12,13 @@ router.post('/', async (req: express.Request, res: express.Response) => {
   const desc = body.description;
   const { email } = body;
   const { isOauth } = body;
-  // eslint-disable-next-line no-unused-vars
+
   let user;
   if (isOauth) {
     console.log('OAuth');
   } else {
     if (password.length <= 2) {
-      res.send('Password too short');
+      res.json({ error: 'Password too short' });
     }
 
     const hashedPassword = await argon2.hash(password);
@@ -34,7 +34,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
     } catch (err) {
       console.log(err);
       if (err.code === '23505') {
-        res.send('Username taken');
+        res.json({ error: 'Username taken' });
       }
     }
   }
@@ -43,7 +43,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
   // req.session.userId = user.uniqueid
 
   // TODO delete once front end is able to make request (dont want the front end to access the user obv)
-  res.send(user);
+  res.json({ user });
 });
 
 module.exports = router;
