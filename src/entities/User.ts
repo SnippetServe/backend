@@ -24,8 +24,8 @@ export default class User extends BaseEntity {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column({select: false})
-  isOauth: boolean
+  @Column({ select: false })
+  isOauth: boolean;
 
   @UpdateDateColumn()
   updatedAt: Date;

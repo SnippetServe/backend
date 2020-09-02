@@ -1,23 +1,21 @@
 import * as express from 'express';
+import { getConnection } from 'typeorm';
 import Snippet from '../../entities/Snippet';
-import User from '../../entities/User';
-import { userInfo } from 'os';
-import { Connection, getRepository, getConnection } from 'typeorm';
+
 const router = express.Router();
 
 router.post('/create', async (req: express.Request, res: express.Response) => {
-  const body = req.body;
-  const description = body.description;
+  const { body } = req;
+  const { description } = body;
   const isPrivate = body.private;
-  const tags = body.tags;
-  const lang = body.lang;
-  const code = body.code;
+  const { tags } = body;
+  const { lang } = body;
+  const { code } = body;
   const userUUID = body.creatorId;
   const downvotes = 0;
   const upvotes = 0;
-  /*&hi */
-  //TODO check if user is logged in
-
+  /* &hi */
+  // TODO check if user is logged in
 
   const snippet = await Snippet.create({
     userUUID,
@@ -30,7 +28,7 @@ router.post('/create', async (req: express.Request, res: express.Response) => {
     upvotes
   }).save();
 
-  //console.log all snippets from the user
+  // console.log all snippets from the user
 
   const snippetRepo = await getConnection().getRepository(Snippet);
   const users = await snippetRepo.find({
@@ -38,7 +36,6 @@ router.post('/create', async (req: express.Request, res: express.Response) => {
     relations: ['user']
   });
   users.forEach((user) => {
-
     console.log(user);
   });
   // const user1 = await User.findOne({id: creatorId})
@@ -58,7 +55,7 @@ router.post('/update', async (req: express.Request, res: express.Response) => {
   const { lang } = body;
   const { code } = body;
 
-  //TODO check if user is logged in
+  // TODO check if user is logged in
   const snippet = await Snippet.findOne(uuid);
   if (!snippet) {
     res.send('Snipet not found');
@@ -77,7 +74,6 @@ router.post('/update', async (req: express.Request, res: express.Response) => {
 router.post('/delete', async (req: express.Request, res: express.Response) => {
   const { body } = req;
   const { uuid } = body;
-  const userUUID = '7b2f0447-58c6-4c17-a7e2-c295badc40b4';
 
   const snippet = await Snippet.findOne(uuid);
   if (!snippet) {

@@ -11,19 +11,18 @@ router.post('/', async (req: express.Request, res: express.Response) => {
   const { password } = body;
   const desc = body.description;
   const { email } = body;
-  const { isOauth } = body
+  const { isOauth } = body;
   // eslint-disable-next-line no-unused-vars
   let user;
-  const { unique } = body;
-  if(isOauth) {
-
+  if (isOauth) {
+    console.log('OAuth');
   } else {
     if (password.length <= 2) {
       res.send('Password too short');
     }
-  
+
     const hashedPassword = await argon2.hash(password);
-    
+
     try {
       const result = await User.create({
         username,
@@ -36,10 +35,9 @@ router.post('/', async (req: express.Request, res: express.Response) => {
       console.log(err);
       if (err.code === '23505') {
         res.send('Username taken');
-      }  
+      }
     }
   }
-  
 
   // TODO uncomment once front end is able to make request (this is will create a session for the user)
   // req.session.userId = user.uniqueid
