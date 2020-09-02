@@ -15,6 +15,7 @@ router.post('/create', async (req: express.Request, res: express.Response) => {
   const downvotes = 0;
   const upvotes = 0;
   /* &hi */
+  // TODO check if user is logged in
 
   const snippet = await Snippet.create({
     userUUID,
@@ -28,13 +29,13 @@ router.post('/create', async (req: express.Request, res: express.Response) => {
   }).save();
 
   // console.log all snippets from the user
+
   const snippetRepo = await getConnection().getRepository(Snippet);
   const users = await snippetRepo.find({
     where: { userUUID },
     relations: ['user']
   });
   users.forEach((user) => {
-    // tslint:disable-next-line:no-console
     console.log(user);
   });
   // const user1 = await User.findOne({id: creatorId})
@@ -43,6 +44,44 @@ router.post('/create', async (req: express.Request, res: express.Response) => {
   // const result = await User.findOne({id: 1})
   // await Snippet.delete({})
   res.send(snippet);
+});
+
+router.post('/update', async (req: express.Request, res: express.Response) => {
+  const { body } = req;
+  const { uuid } = body;
+  const { description } = body;
+  const { isPrivate } = body;
+  const { tags } = body;
+  const { lang } = body;
+  const { code } = body;
+
+  // TODO check if user is logged in
+  const snippet = await Snippet.findOne(uuid);
+  if (!snippet) {
+    res.send('Snipet not found');
+  } else {
+    snippet.description = description;
+    snippet.private = isPrivate;
+    snippet.tags = tags;
+    snippet.lang = lang;
+    snippet.code = code;
+    snippet.save();
+
+    res.send(snippet);
+  }
+});
+
+router.post('/delete', async (req: express.Request, res: express.Response) => {
+  const { body } = req;
+  const { uuid } = body;
+
+  const snippet = await Snippet.findOne(uuid);
+  if (!snippet) {
+    res.send('Snippet not found');
+  } else {
+    await Snippet.delete(uuid);
+    res.send('snippet deleted');
+  }
 });
 
 module.exports = router;
