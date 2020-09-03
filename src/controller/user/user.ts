@@ -10,21 +10,14 @@ router.get('/', async (req: express.Request, res: express.Response) => {
   // temporary code to retrieve current user since user session cant be stored in postman
   const { body } = req;
   const { id } = body;
-  // TOO uncomment once front end is able to make request
-  // if(!req.session.userId) {
-  //   res.send("User not logged in")
-  // }
-  // const user = await User.findOne(req.session.userId);
+
+  // TODO check if user is logged in
   const user = await User.findOne(id);
   if (!user) {
     res.json({ error: 'User not found' });
   }
   res.json({ user });
 
-  // TODO uncomment once front end is able to make request
-  // if(req.session.userId == user.uniqueid) {
-  //   res.send(user)
-  // }
 });
 
 router.get('/id', async (req: express.Request, res: express.Response) => {
@@ -32,6 +25,7 @@ router.get('/id', async (req: express.Request, res: express.Response) => {
   const id = body.uuid;
   const user = await User.findOne(id);
   // eslint-disable-next-line no-unused-vars
+  // TODO check if user is logged in
   const snippets = await Snippet.find({ user: id, private: false });
 
   if (!user) {
@@ -41,17 +35,13 @@ router.get('/id', async (req: express.Request, res: express.Response) => {
     username: user.username,
     snippets: user.snippets
   });
-
-  // TODO uncomment once front end is able to make request
-  // if(req.session.userId == user.uniqueid) {
-  //   res.send(user)
-  // }
 });
 
 // Edit User
 router.put('/', async (req: express.Request, res: express.Response) => {
   const { body } = req;
   const { id } = body;
+  // TODO check if user is logged in
   const user = await User.findOne(id);
 
   if (!user) {
@@ -78,10 +68,6 @@ router.put('/', async (req: express.Request, res: express.Response) => {
 
   res.json({ msg: 'updated' });
 
-  // TODO uncomment once front end is able to make request
-  // if(req.session.userId == user.uniqueid) {
-  //   res.send(user)
-  // }
 });
 
 module.exports = router;

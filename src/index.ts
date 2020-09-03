@@ -35,29 +35,29 @@ const main = async () => {
 
   const app = express();
 
-  // Redis setup
-  const RedisStore = connectRedis(session);
-  const redis = new Redis(process.env.REDIS_URL);
+  // // Redis setup
+  // const RedisStore = connectRedis(session);
+  // const redis = new Redis(process.env.REDIS_URL);
 
-  app.use(
-    session({
-      name: COOKIE_NAME,
-      store: new RedisStore({
-        client: redis,
-        disableTouch: true
-      }),
-      cookie: {
-        maxAge: 1000 * 60 * 60 * 1, // 1 month
-        httpOnly: true,
-        sameSite: 'lax', // csrf
-        secure: __prod__, // cookie only works in https
-        domain: __prod__ ? '.snippetserve.com' : undefined
-      },
-      saveUninitialized: false,
-      secret: process.env.SESSION_SECRET,
-      resave: false
-    })
-  );
+  // app.use(
+  //   session({
+  //     name: COOKIE_NAME,
+  //     store: new RedisStore({
+  //       client: redis,
+  //       disableTouch: true
+  //     }),
+  //     cookie: {
+  //       maxAge: 1000 * 60 * 60 * 1, // 1 month
+  //       httpOnly: true,
+  //       sameSite: 'lax', // csrf
+  //       secure: __prod__, // cookie only works in https
+  //       domain: __prod__ ? '.snippetserve.com' : undefined
+  //     },
+  //     saveUninitialized: false,
+  //     secret: process.env.SESSION_SECRET,
+  //     resave: false
+  //   })
+  // );
 
   app.use(express.json());
 

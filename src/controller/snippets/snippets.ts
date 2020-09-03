@@ -75,6 +75,7 @@ router.post('/delete', async (req: express.Request, res: express.Response) => {
   const { body } = req;
   const { uuid } = body;
 
+  // TODO check if user is logged in
   const snippet = await Snippet.findOne(uuid);
   if (!snippet) {
     res.json({ error: 'Snippet not found' });
