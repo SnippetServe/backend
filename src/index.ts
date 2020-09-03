@@ -1,16 +1,11 @@
-// Redis and Session
-import connectRedis from 'connect-redis';
+import 'reflect-metadata';
 import 'dotenv-safe/config';
 import express from 'express';
-import session from 'express-session';
-import Redis from 'ioredis';
 // morgan
 import morgan from 'morgan';
 import path from 'path';
-import 'reflect-metadata';
 import { createConnection } from 'typeorm';
-// Constants
-import { COOKIE_NAME, __prod__ } from './constants';
+
 // Entities
 import Snippet from './entities/Snippet';
 import User from './entities/User';
@@ -34,30 +29,6 @@ const main = async () => {
   });
 
   const app = express();
-
-  // Redis setup
-  const RedisStore = connectRedis(session);
-  const redis = new Redis(process.env.REDIS_URL);
-
-  app.use(
-    session({
-      name: COOKIE_NAME,
-      store: new RedisStore({
-        client: redis,
-        disableTouch: true
-      }),
-      cookie: {
-        maxAge: 1000 * 60 * 60 * 1, // 1 month
-        httpOnly: true,
-        sameSite: 'lax', // csrf
-        secure: __prod__, // cookie only works in https
-        domain: __prod__ ? '.snippetserve.com' : undefined
-      },
-      saveUninitialized: false,
-      secret: process.env.SESSION_SECRET,
-      resave: false
-    })
-  );
 
   app.use(express.json());
 
