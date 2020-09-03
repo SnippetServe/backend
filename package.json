@@ -51,7 +51,9 @@
   "dependencies": {
     "@types/jsonwebtoken": "^8.5.0",
     "@types/morgan": "^1.9.1",
+    "@types/passport": "^1.0.4",
     "@types/passport-jwt": "^3.0.3",
+    "@types/passport-local": "^1.0.33",
     "argon2": "^0.27.0",
     "class-transformer": "^0.3.1",
     "connect-redis": "^5.0.0",
@@ -61,7 +63,9 @@
     "ioredis": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
+    "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "pg": "^8.3.3",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.25"
