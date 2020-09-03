@@ -1,27 +1,35 @@
 import * as express from 'express';
-// import argon2 from 'argon2';
-// import User from '../../entities/User';
+import argon2 from 'argon2';
+import * as jsonwebtoken from 'jsonwebtoken';
+import User from '../../entities/User';
 
 const router = express.Router();
 
 // get route
 router.post('/', async (req: express.Request, res: express.Response) => {
-  // const { body } = req;
-  // const { username } = body;
-  // const { password } = body;
-  // const desc = body.description;
-  // const { email } = body;
-  // const { type } = body;
-  // const { from } = body;
-  // let isOauth;
+  const { body } = req;
+  const { username } = body;
+  const { password } = body;
+  const desc = body.description;
+  const { email } = body;
+  const hashPw = await argon2.hash(password);
+  try {
+    const user = await User.create({
+      username,
+      email,
+      description: desc,
+      password: hashPw,
+      isOauth: false
+    }).save();
 
-  // starting signup from scratch
-
-  // TODO delete once front end is able to make request (dont want the front end to access the user obv)
-  // res.json({ user });
-  res.json({ hi: 'h' });
-  // to remove eslint error
-  console.log(req);
+    // Make the token and send that
+    const payload = { id: user.uuid };
+    const token = jsonwebtoken.sign(payload, process.env.JWT_SECRET);
+    res.json({ token });
+  } catch (err) {
+    // TODO make it descriptive
+    res.status(500).json({ error: 'error' });
+  }
 });
 
 module.exports = router;

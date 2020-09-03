@@ -1,6 +1,10 @@
 import 'reflect-metadata';
 import 'dotenv-safe/config';
 import express from 'express';
+
+// Passport
+import passport from 'passport';
+
 // morgan
 import morgan from 'morgan';
 import path from 'path';
@@ -9,6 +13,9 @@ import { createConnection } from 'typeorm';
 // Entities
 import Snippet from './entities/Snippet';
 import User from './entities/User';
+
+// addJWT
+import addJWT from './auth/auth';
 
 // Routes
 const user = require('./controller/user/user');
@@ -46,6 +53,19 @@ const main = async () => {
 
   // Use morgan
   app.use(morgan('dev'));
+
+  // Passport
+  app.use(passport.initialize());
+  addJWT();
+
+  // Example to use JWT Protected routes
+  app.get(
+    '/secret',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+      res.json('Success! You can not see this without a token');
+    }
+  );
 
   // For 404 pages
   app.use((req, res) => {

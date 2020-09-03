@@ -1,5 +1,6 @@
 import * as express from 'express';
 import argon2 from 'argon2';
+import * as jsonwebtoken from 'jsonwebtoken';
 import User from '../../entities/User';
 
 const router = express.Router();
@@ -20,6 +21,11 @@ router.post('/', async (req: express.Request, res: express.Response) => {
   const verifyPass = await argon2.verify(user.password, password);
   if (!verifyPass) {
     res.json({ error: 'Incorrect Username/Password' });
+  } else {
+    // Make the token and send that
+    const payload = { id: user.uuid };
+    const token = jsonwebtoken.sign(payload, process.env.JWT_SECRET);
+    res.json({ token });
   }
 
   // TODO delete once front end is able to make request (dont want the front end to access the user obv)
