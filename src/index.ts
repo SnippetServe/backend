@@ -2,20 +2,21 @@ import 'reflect-metadata';
 import 'dotenv-safe/config';
 import express from 'express';
 
-// Passport
-import passport from 'passport';
-
 // morgan
 import morgan from 'morgan';
 import path from 'path';
 import { createConnection } from 'typeorm';
 
+// Passport
+import passport from 'passport';
+import passportMiddleware from './middleware/passportMiddleware';
+
+// Generic Controller Exception Middleware
+import { serverError } from './middleware/errors';
+
 // Entities
 import Snippet from './entities/Snippet';
 import User from './entities/User';
-
-// addJWT
-import addJWT from './auth/auth';
 
 // Routes
 const user = require('./controller/user/user');
@@ -23,6 +24,7 @@ const snippets = require('./controller/snippets/snippets');
 const login = require('./controller/user/login');
 const signup = require('./controller/user/signup');
 const forgot = require('./controller/user/forgot');
+const oauthRoutes = require('./controller/user/oauth');
 
 const main = async () => {
   // Connect to postgres database
@@ -39,12 +41,6 @@ const main = async () => {
 
   app.use(express.json());
 
-  app.use('/api/snippets', snippets);
-  app.use('/api/user', user);
-  app.use('/api/login', login);
-  app.use('/api/signup', signup);
-  app.use('/api/forgot', forgot);
-
   /*
   Fix for:
   body-parser deprecated undefined extended: provide extended option dist/index.js:69:31
@@ -55,8 +51,15 @@ const main = async () => {
   app.use(morgan('dev'));
 
   // Passport
-  app.use(passport.initialize());
-  addJWT();
+  app.use(passportMiddleware.initialize());
+
+  // use routes after every other middleware like passport has been added to express
+  app.use('/api/snippets', snippets);
+  app.use('/api/user', user);
+  app.use('/api/login', login);
+  app.use('/api/signup', signup);
+  app.use('/api/forgot', forgot);
+  app.use(oauthRoutes);
 
   // Example to use JWT Protected routes
   app.get(
@@ -72,7 +75,11 @@ const main = async () => {
     res.status(404).json({ status: '404' });
   });
 
-  app.listen(parseInt(process.env.PORT, 10), () => {
+  // The last custom middleware that wraps the exception as status 500 and returns
+  // "Internal Server Error" if no exception message exists
+  app.use(serverError);
+
+  app.listen(+process.env.PORT, () => {
     // tslint:disable-next-line:no-console
     console.log(`Server started on localhost:${process.env.PORT}`);
   });

@@ -1,6 +1,6 @@
 import * as express from 'express';
 import argon2 from 'argon2';
-import * as jsonwebtoken from 'jsonwebtoken';
+import { generateToken } from '../../utils/jwtUtils';
 import User from '../../entities/User';
 
 const router = express.Router();
@@ -23,8 +23,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
     res.json({ error: 'Incorrect Username/Password' });
   } else {
     // Make the token and send that
-    const payload = { id: user.uuid };
-    const token = jsonwebtoken.sign(payload, process.env.JWT_SECRET);
+    const token = generateToken({ id: user.uuid });
     res.json({ token });
   }
 
