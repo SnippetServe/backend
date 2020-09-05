@@ -33,10 +33,11 @@ export default class User extends BaseEntity {
   @Column({ unique: true })
   email!: string;
 
-  @Column()
+  @Column({ nullable: true })
   description: string;
 
-  @Column({ select: false })
+  // nullable because if user signs up using oauth, then this column can be null
+  @Column({ select: false, nullable: true })
   password: string;
 
   @OneToMany(() => Snippet, (snippet: Snippet) => snippet.user, {
