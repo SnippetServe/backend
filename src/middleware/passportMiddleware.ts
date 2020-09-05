@@ -2,6 +2,7 @@ import passport from 'passport';
 import { Strategy as GithubStrategy } from 'passport-github2';
 import * as jwt from 'passport-jwt';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import * as express from 'express';
 import { GITHUB, GOOGLE } from '../config/oauthConfig';
 import User from '../entities/User';
 
@@ -78,12 +79,15 @@ passport.use(
   new jwt.Strategy(
     {
       jwtFromRequest: jwt.ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.JWT_SECRET
+      secretOrKey: process.env.JWT_SECRET,
+      passReqToCallback: true
     },
-    (payload, next) => {
+    async (req: express.Request, payload: any, next: any) => {
       // Get the user
-      const user = User.findOne(payload.id);
+
+      const user = await User.findOne(payload.id);
       if (user) {
+        req.user = user;
         return next(null, user);
       }
       return next(null, false);
