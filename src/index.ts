@@ -66,7 +66,8 @@ const main = async () => {
     '/secret',
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
-      res.json('Success! You can not see this without a token');
+      const currentUser = req.user as User;
+      res.json({ currentUser });
     }
   );
 
