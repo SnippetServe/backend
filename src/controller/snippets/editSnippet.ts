@@ -12,7 +12,6 @@ updateRouter.put('/', async (req: express.Request, res: express.Response) => {
   const { lang } = body;
   const { code } = body;
 
-  // TODO check if user is logged in
   const snippet = await Snippet.findOne(uuid);
   if (!snippet) {
     res.json({ error: 'Snipet not found' });

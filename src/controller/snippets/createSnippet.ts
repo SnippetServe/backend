@@ -10,7 +10,7 @@ createRouter.post('/', async (req: express.Request, res: express.Response) => {
 
   const { body } = req;
   const { description } = body;
-  const isPrivate = body.private;
+  const { isPrivate } = body;
   const { tags } = body;
   const { lang } = body;
   const { code } = body;
@@ -41,6 +41,9 @@ createRouter.post('/', async (req: express.Request, res: express.Response) => {
   users.forEach((user) => {
     console.log(user);
   });
+
+  // TODO @Helix please check what to do here!
+
   // const user1 = await User.findOne({id: creatorId})
   // user.snippets = [...user.snippets, snippet]
   // user.save()
