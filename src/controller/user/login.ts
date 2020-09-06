@@ -5,7 +5,7 @@ import User from '../../entities/User';
 
 const router = express.Router();
 
-// get route
+// Login Route
 router.post('/', async (req: express.Request, res: express.Response) => {
   const { body } = req;
   const { username } = body;

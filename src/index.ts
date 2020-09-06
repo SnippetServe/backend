@@ -54,7 +54,11 @@ const main = async () => {
   app.use(passportMiddleware.initialize());
 
   // use routes after every other middleware like passport has been added to express
-  app.use('/api/snippets', snippets);
+  app.use(
+    '/api/snippets',
+    passport.authenticate('jwt', { session: false }),
+    snippets
+  );
   app.use('/api/user', user);
   app.use('/api/login', login);
   app.use('/api/signup', signup);

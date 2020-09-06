@@ -56,7 +56,161 @@ Coming soon?
 
 ## Api Reference
 
-Coming soon a description of the api, including authentication methods as well as explaining all the endpoints with their required parameters.
+### Authentication
+You can get your API key by making a request to the signin route and then send the API Token as a Bearer token as indicated below:
+`Authorization: Bearer <API-TOKEN>` Pass this in the header
+
+### Snippets
+1. `GET` `/api/snippets` : Get one specific snippet with a `uuid`
+
+    The request should look like this:    
+    ```
+    {
+        "uuid": "c2d6c07d-cef1-4bfd-ba44-6a732ae6cea5"
+    }
+    ```
+
+    The expected response should look like this:
+    ```
+    {
+        "snippet": {
+            "uuid": "efa3de67-3459-48df-92d3-8a8c17bd91c8",
+            "createdAt": "2020-09-06T08:34:12.171Z",
+            "updatedAt": "2020-09-06T08:55:27.046Z",
+            "description": "Sample",
+            "private": false,
+            "tags": "python",
+            "downvotes": 0,
+            "upvotes": 0,
+            "lang": "Python",
+            "code": "print(\"Hi\")",
+            "userUUID": "679031cd-f3a7-48b1-a765-528f37cf2018"
+        }
+    }
+    ```
+2. `POST` `/api/snippets` : Create a new snippet 
+   
+    The request should look like this:    
+
+    ```
+    {
+        "description": "Sample",
+        "isPrivate": "False",
+        "tags": "",
+        "lang": "Python",
+        "code": "print(\"Hi\")"
+    }
+    ```
+    The snippet would be created under the current user
+
+    The expected response should look like this:
+    ```
+    {
+        "snippet": {
+            "description": "Sample",
+            "private": "False",
+            "tags": "",
+            "downvotes": 0,
+            "upvotes": 0,
+            "lang": "Python",
+            "code": "print(\"Hi\")",
+            "userUUID": "679031cd-f3a7-48b1-a765-528f37cf2018",
+            "uuid": "c2d6c07d-cef1-4bfd-ba44-6a732ae6cea5",
+            "createdAt": "2020-09-06T09:14:27.245Z",
+            "updatedAt": "2020-09-06T09:14:27.245Z"
+        }
+    }
+    ```
+
+3. `PUT` `/api/snippets` : Updates the snippet with the provided values. 
+
+    The request should contain all the fields of the snippet (ideally get the snippet first and then update) and should look something like this:
+    ```
+    {
+        "description": "Sample",
+        "isPrivate": "False",
+        "tags": "",
+        "lang": "Python",
+        "code": "print(\"Hi! This is a update!\")"
+    }
+    ```
+
+    The expected response should look like this:
+    ```
+    {
+        "snippet": {
+            "description": "Sample",
+            "private": "False",
+            "tags": "",
+            "downvotes": 0,
+            "upvotes": 0,
+            "lang": "Python",
+            "code": "print(\"Hi! This is a update!\")",
+            "userUUID": "679031cd-f3a7-48b1-a765-528f37cf2018",
+            "uuid": "c2d6c07d-cef1-4bfd-ba44-6a732ae6cea5",
+            "createdAt": "2020-09-06T09:14:27.245Z",
+            "updatedAt": "2020-09-06T09:14:27.245Z"
+        }
+    }
+    ```
+
+4. `DELETE` `/api/snippets` : Delete the snippet with the provided `uuid`
+
+    The expected request should look something like this:
+    ```
+    {
+        "uuid":"c2d6c07d-cef1-4bfd-ba44-6a732ae6cea5"
+    }
+    ```
+
+    The expected response should look like this:
+    ```
+    {
+        "msg": "snippet deleted"
+    }
+    ```
+
+### User 
+
+1. `POST` `/api/login` : Checks the authenticity of the entered values and then returns a signed JWT token
+
+    The expected request should look something like this:
+    ```
+    {
+        "username": "My username",
+        "password": "My secret password"
+    }
+    ```
+
+    The expected response (after successfull verification) should look like this:
+    ```
+    {
+        "token": "<API-TOKEN>"
+    }
+    ```
+
+    Error messages would be added soon!
+
+2. `POST` `/api/signup` : Creates a new user or errors out if the user already exists. Once created, a signed JWT Token is returned
+
+    The expected request should look something like this:
+    ```
+    {
+        "username": "My custom username",
+        "password": "My custom password",
+        "email": "username@domain.com",
+        "description": "This is my bio"
+    }
+    ```
+
+    The expected response looks like this:
+    ```
+    {
+       "token": "<API-TOKEN>" 
+    }
+    ```
+
+More API endpoint docs would be available soon 😍 
 
 ## License
 
